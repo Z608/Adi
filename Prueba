@@ -1,0 +1,32 @@
+ public class UniversidadController : Controller
+    {
+		UniversidadEntities modeloBD = new UniversidadEntities();
+        #region Login
+        public ActionResult Bienvenidos()
+		{
+			bool sesionIniciada = false;
+
+			///consulta si elkey "logueado" de la sesion 
+			///posee un valor
+			if (this.Session["logueado"] != null)
+			{
+				sesionIniciada = Convert.ToBoolean(this.Session["logueado"]);
+			}
+
+			if (sesionIniciada == true)
+			{
+				///Reconstruir los datos del modelo accediendo al objeto
+				/// converti  las propiedades () asi se convierte
+				pa_UsuarioSelectUserYPass_Result modelo = (pa_UsuarioSelectUserYPass_Result)this.Session["datosUsuario"];
+				return View(modelo);
+			}
+			else
+			{
+				///Redireccionae al metodo 
+				///index del controler login
+				return RedirectToAction("Principal", "Principal");
+			}
+		}
+        #endregion
+}
+}
